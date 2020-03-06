@@ -1,0 +1,5 @@
+{
+  "navigators.HomeNavigator.tabBarLabel": "Due",
+  "screens.CalendarScreen.calendar": "Calendar",
+  "screens.HomeScreen.home": "Home"
+}
