@@ -1,24 +1,23 @@
 import React from "react";
-import HomeScreen from ".";
+import NotesScreen from ".";
 import messages from "./messages";
 import sharedMessages from "../../shared/messages";
 import { useTranslation } from "../../shared/hooks";
 import MenuButton from "../../components/MenuButton";
 
-const WithHomeScreen = HomeStackNavigatorScreen => {
+const WithNotesScreen = NotesStackNavigatorScreen => {
   const { t } = useTranslation();
   return (
-    <HomeStackNavigatorScreen
-      name="Home"
-      component={HomeScreen}
+    <NotesStackNavigatorScreen
+      name="Notes"
+      component={NotesScreen}
       options={({ navigation }) => ({
-        headerTitle: t(messages.home),
+        headerTitle: t(messages.notes),
         headerRight: () => (
           <MenuButton
             navigation={navigation}
             iconName="search"
             title={t(sharedMessages.search)}
-            onPress={() => navigation.navigate("Notes")}
           />
         ),
       })}
@@ -26,4 +25,4 @@ const WithHomeScreen = HomeStackNavigatorScreen => {
   );
 };
 
-export default WithHomeScreen;
+export default WithNotesScreen;

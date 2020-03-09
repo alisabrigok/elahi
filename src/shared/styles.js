@@ -1,4 +1,4 @@
 export const Colors = {
-  primary: "#F5D236",
+  primary: "#6500b3",
   tabIconGray: "#939393",
 };

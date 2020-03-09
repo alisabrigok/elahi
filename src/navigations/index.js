@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import WithHomeTabNavigator from "./HomeNavigator";
-import WithCalendarTabNavigator from "./CalendarNavigator";
-import WithGoalsTabNavigator from "./GoalsNavigator";
-import WithHabitsTabNavigator from "./HabitsNavigator";
+import WithNotesTabNavigator from "./NotesNavigator";
+import WithFavoritesTabNavigator from "./FavoritesNavigator";
+import WithSettingsTabNavigator from "./SettingsNavigator";
 
 import { Colors } from "../shared/styles";
 
@@ -19,9 +19,9 @@ const TabNavigation = () => (
       style: styles.tabBar,
     }}>
     {WithHomeTabNavigator(Tab.Screen)}
-    {WithCalendarTabNavigator(Tab.Screen)}
-    {WithGoalsTabNavigator(Tab.Screen)}
-    {WithHabitsTabNavigator(Tab.Screen)}
+    {WithNotesTabNavigator(Tab.Screen)}
+    {WithFavoritesTabNavigator(Tab.Screen)}
+    {WithSettingsTabNavigator(Tab.Screen)}
   </Tab.Navigator>
 );
 

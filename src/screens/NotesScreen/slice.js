@@ -2,18 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { scope as name } from "./messages";
 
-const calendarSlice = createSlice({
+const notesSlice = createSlice({
   name,
   initialState: {},
   reducers: {
-    getCalendar(state, action) {
+    getNotes(state, action) {
       state = action.payload;
     },
   },
 });
 
-export const { actions, reducer } = calendarSlice;
+export const { actions, reducer } = notesSlice;
 
-export const { getCalendar } = actions;
+export const { getNotes } = actions;
 
 export default reducer;
