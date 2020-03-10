@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import reducer from "./slice";
 import saga from "./saga";
 import messages, { scope as key } from "./messages";
@@ -10,13 +10,19 @@ import ListItem, { ListItemSeparator } from "../../components/ListItem";
 const HomeScreen = props => {
   useInjectStore({ key, saga, reducer });
   const { t } = useTranslation();
+  const [data, setData] = useState(DATA);
+
+  const removeData = item => () => {
+    const newData = data.filter(d => d.from !== item.from);
+    setData(newData);
+  };
 
   return (
     <FlatList
-      data={DATA}
+      data={data}
       ItemSeparatorComponent={ListItemSeparator}
       renderItem={({ item }) => (
-        <Swipeable>
+        <Swipeable onSwipeableRightOpen={removeData(item)}>
           <ListItem item={item} />
         </Swipeable>
       )}
@@ -45,35 +51,5 @@ const DATA = [
     when: "6:06 AM",
     message:
       "Sed non arcu ullamcorper, eleifend velit eu, tristique metus. Duis id sapien eu orci varius malesuada et ac ipsum. Ut a magna vel urna tristique sagittis et dapibus augue. Vivamus non mauris a turpis auctor sagittis vitae vel ex. Curabitur accumsan quis mauris quis venenatis.",
-  },
-  {
-    from: "Porthos",
-    when: "Yesterday",
-    message:
-      "Vivamus id condimentum lorem. Duis semper euismod luctus. Morbi maximus urna ut mi tempus fermentum. Nam eget dui sed ligula rutrum venenatis.",
-  },
-  {
-    from: "Domestos",
-    when: "2 days ago",
-    message:
-      "Aliquam imperdiet dolor eget aliquet feugiat. Fusce tincidunt mi diam. Pellentesque cursus semper sem. Aliquam ut ullamcorper massa, sed tincidunt eros.",
-  },
-  {
-    from: "Cardinal Richelieu",
-    when: "2 days ago",
-    message:
-      "Pellentesque id quam ac tortor pellentesque tempor tristique ut nunc. Pellentesque posuere ut massa eget imperdiet. Ut at nisi magna. Ut volutpat tellus ut est viverra, eu egestas ex tincidunt. Cras tellus tellus, fringilla eget massa in, ultricies maximus eros.",
-  },
-  {
-    from: "D'Artagnan",
-    when: "Week ago",
-    message:
-      "Aliquam non aliquet mi. Proin feugiat nisl maximus arcu imperdiet euismod nec at purus. Vestibulum sed dui eget mauris consequat dignissim.",
-  },
-  {
-    from: "Cardinal Richelieu",
-    when: "2 weeks ago",
-    message:
-      "Vestibulum ac nisi non augue viverra ullamcorper quis vitae mi. Donec vitae risus aliquam, posuere urna fermentum, fermentum risus. ",
   },
 ];

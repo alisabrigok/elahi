@@ -1,13 +1,14 @@
-import React, { useRef } from "react";
-import { Animated, StyleSheet, I18nManager } from "react-native";
+import React, { useRef, useState } from "react";
+import { Animated, StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
-const ListItem = props => {
+const ListItem = ({ children, onSwipeableRightOpen }) => {
   const swipeableRef = useRef(null);
+  const [isRemoved, setIsRemoved] = useState(false);
 
   const renderLeftActions = (progress, dragX) => {
     const scale = dragX.interpolate({
@@ -19,7 +20,7 @@ const ListItem = props => {
     return (
       <RectButton style={styles.leftAction} onPress={close}>
         <AnimatedIcon
-          name="archive"
+          name="star"
           size={30}
           color="#fff"
           style={[styles.actionIcon, { transform: [{ scale }] }]}
@@ -36,7 +37,9 @@ const ListItem = props => {
     });
 
     return (
-      <RectButton style={styles.rightAction} onPress={close}>
+      <RectButton
+        style={[styles.rightAction, { display: isRemoved ? "none" : "flex" }]}
+        onPress={close}>
         <AnimatedIcon
           name="delete-forever"
           size={30}
@@ -45,6 +48,16 @@ const ListItem = props => {
         />
       </RectButton>
     );
+  };
+
+  const swipeableRightOpenHandler = () => {
+    setIsRemoved(true);
+    close();
+    onSwipeableRightOpen();
+  };
+
+  const swipeableCloseHandler = () => {
+    setIsRemoved(false);
   };
 
   const close = () => {
@@ -58,8 +71,11 @@ const ListItem = props => {
       leftThreshold={80}
       rightThreshold={40}
       renderLeftActions={renderLeftActions}
-      renderRightActions={renderRightActions}>
-      {props.children}
+      renderRightActions={renderRightActions}
+      onSwipeableRightOpen={swipeableRightOpenHandler}
+      onSwipeableLeftOpen={close}
+      onSwipeableClose={swipeableCloseHandler}>
+      {children}
     </Swipeable>
   );
 };
@@ -69,10 +85,10 @@ export default ListItem;
 const styles = StyleSheet.create({
   leftAction: {
     flex: 1,
-    backgroundColor: "#388e3c",
+    backgroundColor: "#F3B303",
     justifyContent: "flex-end",
     alignItems: "center",
-    flexDirection: I18nManager.isRTL ? "row" : "row-reverse",
+    flexDirection: "row-reverse",
   },
   actionIcon: {
     width: 30,
@@ -80,7 +96,7 @@ const styles = StyleSheet.create({
   },
   rightAction: {
     alignItems: "center",
-    flexDirection: I18nManager.isRTL ? "row-reverse" : "row",
+    flexDirection: "row",
     backgroundColor: "#dd2c00",
     flex: 1,
     justifyContent: "flex-end",
