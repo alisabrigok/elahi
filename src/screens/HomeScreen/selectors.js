@@ -9,4 +9,9 @@ const selectLastOpenedNotes = createSelector(
   homeState => homeState.lastOpenedNotes,
 );
 
-export { selectLastOpenedNotes, selectHome };
+const selectLastOpenedNotesLoading = createSelector(
+  [selectHome],
+  homeState => homeState.loading,
+);
+
+export { selectLastOpenedNotes, selectLastOpenedNotesLoading, selectHome };
