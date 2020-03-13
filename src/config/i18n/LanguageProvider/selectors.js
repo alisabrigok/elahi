@@ -5,7 +5,7 @@ import { initialState } from "./slice";
  * Direct selector to the language domain
  */
 
-const selectLanguage = state => state.language || initialState;
+const selectLanguage = state => state.languageProvider || initialState;
 
 /**
  * Select the language locale

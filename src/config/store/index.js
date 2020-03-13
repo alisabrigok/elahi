@@ -7,7 +7,10 @@ const configureAppStore = preloadedState => {
   const sagaMiddleware = createSagaMiddleware();
   const { run: runSaga } = sagaMiddleware;
 
-  const middleware = [...getDefaultMiddleware(), sagaMiddleware];
+  const middleware = [
+    ...getDefaultMiddleware({ thunk: false }),
+    sagaMiddleware,
+  ];
 
   const enhancers = [createInjectorsEnhancer({ createReducer, runSaga })];
 
