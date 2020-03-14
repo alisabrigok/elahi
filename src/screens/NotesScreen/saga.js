@@ -1,13 +1,25 @@
-import { takeEvery, put } from "redux-saga/effects";
-import { getNotes } from "./slice";
+import { takeLatest, put } from "redux-saga/effects";
+import { loadNotes, notesLoaded, notesLoadingError } from "./slice";
+import axios from "axios";
 
-export function* getNotesSaga() {
+export function* loadNotesSaga() {
   try {
-    yield put(getNotes({}));
-  } catch (error) {}
+    const { data } = yield axios.get(
+      "https://jsonplaceholder.typicode.com/todos/1",
+    );
+    const normalized = [
+      {
+        from: "D'Artagnan Ow Yea!",
+        when: "3:11 PM",
+        message: data.title,
+      },
+    ];
+    yield put(notesLoaded(normalized));
+  } catch (error) {
+    yield put(notesLoadingError());
+  }
 }
 
 export default function* root() {
-  const GET_NOTES = getNotes.toString();
-  yield takeEvery(GET_NOTES, getNotesSaga);
+  yield takeLatest(loadNotes.type, loadNotesSaga);
 }
